@@ -35,11 +35,22 @@ public class User {
     private String username;
     private String password;
 
+    private boolean isAdmin;
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", isAdmin='" + isAdmin + '\'' +
                 '}';
     }
 }

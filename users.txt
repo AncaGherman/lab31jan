@@ -1,3 +1,4 @@
-ionel, pwd1
-maria,pwd2
-ana,pwd3
+ionel, pwd1, true
+maria,pwd2, false
+ana,pwd3, false
+pop,ppp, false
