@@ -1,4 +1,4 @@
-ionel, pwd1, true
-maria,pwd2, false
-ana,pwd3, false
-pop,ppp, false
+ionel.condor@gmail.com, p, true
+ionel_condor@yahoo.com,p, false
+ionel.condor@fasttrackit.org,p, false
+icondor@sdl.com,p, false

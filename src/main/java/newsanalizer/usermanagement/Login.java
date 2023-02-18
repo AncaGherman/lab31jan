@@ -1,5 +1,7 @@
 package newsanalizer.usermanagement;
 
+import sendmail.SendMailUsingSendfridAPI;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,6 +33,7 @@ public class Login {
         int counterTries = 0;
         boolean succes = false;
         boolean isAdmin = false;
+        String email=null;
         do {
 
             if(counterTries==MAXTRIES ) { // hardcoded
@@ -59,6 +62,7 @@ public class Login {
                     System.out.println(u);
                     System.out.println("ok, you are logged in now");
                     succes=true;
+                    email=u.getUsername();
                     if(u.isAdmin()) {
                         isAdmin=true;
                     }
@@ -70,12 +74,13 @@ public class Login {
 
         }
         while(!succes);
+
         System.out.println("gone");
 
         if(isAdmin)
             printAdminMenu();
         else
-            printUserMenu();
+            printUserMenu(email);
 
 
 
@@ -147,7 +152,7 @@ public class Login {
 
     }
 
-    private static void   printUserMenu() {
+    private static void   printUserMenu(String email ) {
         System.out.println("1. Analiza stiri , incarcari fisier ");
         String option = new Scanner(System.in).nextLine();
         if(option.equalsIgnoreCase("1")) {
@@ -155,13 +160,13 @@ public class Login {
             String filename = new Scanner(System.in).nextLine();
 
             // algoritm de parsare stiri si restul
-            analyzeNews(filename);
+            analyzeNews(filename, email);
 
         }
 
     }
 
-    public static void   analyzeNews(String filename) {
+    public static void   analyzeNews(String filename, String email ) {
 
 
         String news=null;
@@ -175,6 +180,8 @@ public class Login {
         StringTokenizer st = new StringTokenizer(news,"~");
         String currentNews;
         while(st.hasMoreTokens()) {
+
+
             currentNews = st.nextToken().toLowerCase().trim();
 
           //  System.out.println(currentNews);
@@ -204,6 +211,15 @@ public class Login {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
+            // sendemail
+            SendMailUsingSendfridAPI sm  = new SendMailUsingSendfridAPI(fileName, email);
+
+            sm.sendEmail(); // blocheaza pana se executa , nu trece mai departe
+
+
+            System.out.println("...am trimis mail, trec la urm  news .... ");
+
 
         }
 
